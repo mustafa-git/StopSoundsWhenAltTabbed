@@ -10,6 +10,7 @@ namespace StopSoundsWhenAltTabbed
         // Store current settings to restore later.
         float soundVol;
         float ambientVol;
+        float footstepVol;
         bool volumeSaved = false;
         bool pauseOptionValue;
         //use it to unpause for 3 ticks.
@@ -29,13 +30,17 @@ namespace StopSoundsWhenAltTabbed
                     {
                         soundVol = Game1.options.soundVolumeLevel;
                         ambientVol = Game1.options.ambientVolumeLevel;
+                        footstepVol = Game1.options.footstepVolumeLevel;
                         volumeSaved = true;
                     }
                     Game1.options.ambientVolumeLevel = 0.0f;
                     Game1.options.soundVolumeLevel = 0.0f;
+                    Game1.options.footstepVolumeLevel = 0.0f;
                     if (pauseCounter < 3)
-                    {
-                        pauseOptionValue = Game1.options.pauseWhenOutOfFocus;
+                    {   
+                        // Don't overwrite with wrong value.
+                        if (pauseCounter < 1)
+                            pauseOptionValue = Game1.options.pauseWhenOutOfFocus;
                         Game1.options.pauseWhenOutOfFocus = false;
                         pauseCounter += 1;
                     }
@@ -51,6 +56,7 @@ namespace StopSoundsWhenAltTabbed
                     {
                         Game1.options.soundVolumeLevel = soundVol;
                         Game1.options.ambientVolumeLevel = ambientVol;
+                        Game1.options.footstepVolumeLevel = footstepVol;
                         volumeSaved = false;
                     }
                     if (pauseCounter == 3)
