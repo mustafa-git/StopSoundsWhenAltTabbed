@@ -1,10 +1,10 @@
 {
     "Name": "StopSoundsWhenAltTabbed",
     "Author": "Mustafa",
-    "Version": "1.0.0",
+    "Version": "1.0.1",
     "Description": "Stops sounds when game is alt-tabbed",
     "UniqueID": "Mustafa.StopSoundsWhenAltTabbed",
     "EntryDll": "StopSoundsWhenAltTabbed.dll",
     "MinimumApiVersion": "3.0.0",
-    "UpdateKeys": []
+    "UpdateKeys": ["Nexus:13925"]
   }
