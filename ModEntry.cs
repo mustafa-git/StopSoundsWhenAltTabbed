@@ -13,7 +13,8 @@ namespace StopSoundsWhenAltTabbed
         float footstepVol;
         bool volumeSaved = false;
         bool pauseOptionValue;
-        //use it to unpause for 3 ticks.
+        //use it to unpause for maxCounter number of ticks.
+        int maxCounter = 15;
         int pauseCounter = 0;
         public override void Entry(IModHelper helper)
         {
@@ -36,8 +37,8 @@ namespace StopSoundsWhenAltTabbed
                     Game1.options.ambientVolumeLevel = 0.0f;
                     Game1.options.soundVolumeLevel = 0.0f;
                     Game1.options.footstepVolumeLevel = 0.0f;
-                    if (pauseCounter < 3)
-                    {   
+                    if (pauseCounter < maxCounter)
+                    {
                         // Don't overwrite with wrong value.
                         if (pauseCounter < 1)
                             pauseOptionValue = Game1.options.pauseWhenOutOfFocus;
@@ -59,7 +60,7 @@ namespace StopSoundsWhenAltTabbed
                         Game1.options.footstepVolumeLevel = footstepVol;
                         volumeSaved = false;
                     }
-                    if (pauseCounter == 3)
+                    if (pauseCounter == maxCounter)
                     {
                         Game1.options.pauseWhenOutOfFocus = pauseOptionValue;
                         pauseCounter = 0;
