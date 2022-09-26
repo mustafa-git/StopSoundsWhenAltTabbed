@@ -12,10 +12,6 @@ namespace StopSoundsWhenAltTabbed
         float ambientVol;
         float footstepVol;
         bool volumeSaved = false;
-        bool pauseOptionValue;
-        //use it to unpause for maxCounter number of ticks.
-        int maxCounter = 15;
-        int pauseCounter = 0;
         public override void Entry(IModHelper helper)
         {
             helper.Events.GameLoop.UpdateTicking += this.OnUpdateTicking;
@@ -34,36 +30,19 @@ namespace StopSoundsWhenAltTabbed
                         footstepVol = Game1.options.footstepVolumeLevel;
                         volumeSaved = true;
                     }
-                    Game1.options.ambientVolumeLevel = 0.0f;
-                    Game1.options.soundVolumeLevel = 0.0f;
-                    Game1.options.footstepVolumeLevel = 0.0f;
-                    if (pauseCounter < maxCounter)
-                    {
-                        // Don't overwrite with wrong value.
-                        if (pauseCounter < 1)
-                            pauseOptionValue = Game1.options.pauseWhenOutOfFocus;
-                        Game1.options.pauseWhenOutOfFocus = false;
-                        pauseCounter += 1;
-                    }
-                    else
-                    {
-                        Game1.options.pauseWhenOutOfFocus = pauseOptionValue;
-                    }
+                    Game1.soundCategory.SetVolume(0.0f);
+                    Game1.ambientCategory.SetVolume(0.0f);
+                    Game1.footstepCategory.SetVolume(0.0f);
                 }
                 else
                 {
                     Game1.currentSong.Resume();
                     if (volumeSaved)
                     {
-                        Game1.options.soundVolumeLevel = soundVol;
-                        Game1.options.ambientVolumeLevel = ambientVol;
-                        Game1.options.footstepVolumeLevel = footstepVol;
+                        Game1.soundCategory.SetVolume(soundVol);
+                        Game1.ambientCategory.SetVolume(ambientVol);
+                        Game1.footstepCategory.SetVolume(footstepVol);
                         volumeSaved = false;
-                    }
-                    if (pauseCounter == maxCounter)
-                    {
-                        Game1.options.pauseWhenOutOfFocus = pauseOptionValue;
-                        pauseCounter = 0;
                     }
                 }
             }
