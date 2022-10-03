@@ -30,7 +30,7 @@ namespace StopSoundsWhenAltTabbed
         }
         void OnUpdateTicking(object? sender, UpdateTickingEventArgs e)
         {
-            if (!Context.IsGameLaunched)
+            if (!Context.IsGameLaunched || Game1.game1 is null|| Game1.currentSong is null)
                 return;
 
             if (!Game1.game1.IsActive)
